@@ -82,7 +82,12 @@ $this->validate($request, [
      */
     public function show($id)
     {
-        //
+        $proj=project::find($id);
+        $projLists= ProjectList::all();
+        $countries= Country::all();
+
+        // return ['edit'];
+        return view('pages.edit')->with('projLists',$projLists)->with('countries',$countries)->with('proj', $proj);
     }
 
     /**
@@ -93,7 +98,7 @@ $this->validate($request, [
      */
     public function edit($id)
     {
-        //
+      
     }
 
     /**
@@ -105,7 +110,36 @@ $this->validate($request, [
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'country'=>'required|string',
+            'implementing_office'=>'required|string',
+            'project_title'=>'required|string',
+            'Grant_amount'=>'required|string',
+            'date_from_CGF'=>'required|string',
+            'start_Date'=>'required|string',
+            'duration_Months'=>'required|string',
+            'end_Date'=>'required|string',
+            'readiness_or_NAP_Date'=>'required|string',
+            'type_of_readiness_Monts'=>'required|string',
+            'First_disbursement_amount'=>'required|string',
+            'status'=>'required|string',
+            ]);
+
+$project =project::find($id);
+$project->country=$request->input('country');
+$project->implementing_office=$request->input('implementing_office');
+$project->project_title=$request->input('project_title');
+$project->Grant_amount=$request->input('Grant_amount');
+$project->date_from_CGF=$request->input('date_from_CGF');
+$project->start_Date=$request->input('start_Date');
+$project->duration_Months=$request->input('duration_Months');
+$project->end_Date=$request->input('end_Date');
+$project->readiness_or_NAP_Date=$request->input('readiness_or_NAP_Date');
+$project->type_of_readiness_Monts=$request->input('type_of_readiness_Monts');
+$project->First_disbursement_amount=$request->input('First_disbursement_amount');
+$project->status=$request->input('status');
+$project->save();
+return redirect('/');
     }
 
     /**
@@ -116,6 +150,13 @@ $this->validate($request, [
      */
     public function destroy($id)
     {
-        //
+        
+        // return "Destroy".$id;
+        $project =project::find($id);
+        // if(storage::delete('public/photos/'.$photo->album_id.'/'.$photo->photo)){
+        $project->delete();
+    
+        return redirect('/')->with('success','Photo Deleted');
+        
     }
 }

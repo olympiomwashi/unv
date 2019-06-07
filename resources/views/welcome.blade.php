@@ -3,26 +3,29 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
+    <div class="justify-content-center">
+ <div class="col-md-12">
+ <div class="header"> <h4>Projects <h4> <a style="align:right;" href="/projects/create" class="btn btn-success right">Add New Project</a> </div>
+
+
+            <!-- <div class="card">
  <div class="card-header"> <h4>Projects <h4> <a style="align:right;" href="/projects/create" class="btn btn-success right">Add New Project</a> </div>
 
-<div class="card-body">
+<div class="card-body"> -->
 <table class="tbl table-stripper">
 
 @if(count($projects)>0)
 
 <tr>
 <th>Country</th>
-<th>implementing_office</th>
+<!-- <th>implementing_office</th> -->
 <th>project_title</th>
-<th>Grant_amount</th>
+<!-- <th>Grant_amount</th> -->
 <th>date_from_CGF</th>
 <th>start_Date</th>
 <th>end_Date</th>
 <th>Status</th>
-<th>..</th>
+<th>....</th>
 </th>
 
 <!-- <td>readiness_or_NAP_Date</td>
@@ -33,13 +36,22 @@
 @foreach($projects as $project)
 <tr>
 <td>{{$project->country}}</td>
-<td>{{$project->implementing_office}}</td>
+<!-- <td>{{$project->implementing_office}}</td> -->
 <td>{{$project->project_title}}</td>
-<td>{{$project->Grant_amount}}</td>
+<!-- <td>{{$project->Grant_amount}}</td> -->
 <td>{{$project->date_from_CGF}}</td>
 <td>{{$project->start_Date}}</td>
 <td>{{$project->end_Date}}</td>
 <td>{{$project->status}}</td>
+<td><a href="/projects/{{$project->id}}"> Edit <i class="far fa-edit"></a></i>/
+<i class="fas fa-trash"></i> 
+{!! Form::open(['method' => 'POST','action' => ['ProjectController@destroy', $project->id] ])!!}
+
+{{Form::hidden('_method','DELETE')}}
+{{Form::submit('Delete',['class'=>'btn btn-danger'])}}
+
+{!!Form::close()!!}
+</td>
 </tr>
 <!-- <td>{{$project->readiness_or_NAP_Date}}</td>
 <td>{{$project->type_of_readiness_Monts}}</td>
@@ -52,9 +64,9 @@
 </table>
 
                    
-                </div>
+                <!-- </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 @endsection
